@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Action Bar - Datapack</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================
+       YOUR ORIGINAL CSS 
+       ========================================= */
+    @font-face {
+        font-family: "MCP";
+        src: url("assets/mcp.ttf") format("truetype");
+        font-weight: normal;
+        -webkit-font-smoothing: none;
+        font-smooth: never; /* not standard */
+        text-rendering: geometricPrecision;
+    }
+
+    :root {
+      --bg: #0b0c11;
+      --surface: #13151d;
+      --surface2: #1a1d27;
+      --surface3: #22263a;
+      --border: #272b3d;
+      --border2: #323654;
+      --accent: #eeff70;
+      --accent-dim: rgba(238, 255, 112, .12);
+      --accent2: #7ec8ff;
+      --accent2-dim: rgba(126, 200, 255, .1);
+      --accent3: #ff7eb3;
+      --text: #d4d8eb;
+      --text-muted: #5a6080;
+      --text-dim: #8890aa;
+      --preview-bg: #080910;
+      --green: #5dfc8a;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-xs: 5px;
+      --toggle-off: #2a2d3a;
+      --toggle-on: #eeff70;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow: hidden;
+
+      -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* ─── Header ─── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 13px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--surface);
+      height: 52px;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--accent);
+      letter-spacing: -.5px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo span {
+      display: flex;
+      justify-content: center;
+      color: var(--text-muted);
+      font-weight: 400;
+      line-height: 45px;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(126, 200, 255, .08);
+      color: var(--accent2);
+      border: 1px solid rgba(126, 200, 255, .2);
+      white-space: nowrap;
+    }
+
+    header .spacer {
+      flex: 1;
+    }
+
+    /* Used for buttons in original code */
+    .dl-btn {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, rgba(238, 255, 112, .1), rgba(126, 200, 255, .07));
+      border: 1px solid rgba(238, 255, 112, .25);
+      color: var(--accent);
+      border-radius: var(--radius-xs);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .dl-btn:hover {
+      background: linear-gradient(135deg, rgba(238, 255, 112, .18), rgba(126, 200, 255, .12));
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 14px;
+      }
+    }
+
+    a {
+      color: lightskyblue;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    a:hover {
+      color: var(--accent2);
+    }
+
+
+    /* =========================================
+       ADDITIONAL CSS FOR LANDING PAGE CONTENT
+       ========================================= */
+
+    /* Allow standard text selection in the content area */
+    .main-view {
+      height: calc(100vh - 52px);
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    /* Hero Banner Area */
+    .hero-section {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .hero-banner {
+      width: 100%;
+      max-width: 600px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      margin: 0 auto 20px;
+      display: block;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-dim);
+      max-width: 650px;
+      margin: 0 auto 15px auto;
+      line-height: 1.6;
+    }
+
+    .version-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      margin-bottom: 25px;
+    }
+
+    .version-tag::before {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* Buttons Layout */
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .tool-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px;
+      border-radius: var(--radius-xs);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+      text-align: center;
+      display: block;
+    }
+    .tool-btn:hover {
+      border-color: var(--accent2);
+      color: var(--accent2);
+      background: rgba(126, 200, 255, .05);
+    }
+
+    /* Modrinth special button */
+    .btn-modrinth {
+      border-color: rgba(93, 252, 138, .3);
+      color: var(--green);
+      background: rgba(93, 252, 138, .05);
+    }
+    .btn-modrinth:hover {
+      background: rgba(93, 252, 138, .1);
+      border-color: rgba(93, 252, 138, .5);
+    }
+
+    /* Markdown Typography */
+    .content-area h2 {
+      font-size: 22px;
+      color: var(--accent);
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    .content-area h3 {
+      font-size: 16px;
+      color: #fff;
+      margin: 24px 0 12px;
+      font-weight: 600;
+    }
+
+    .content-area p {
+      margin-bottom: 16px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .content-area ul {
+      margin-bottom: 16px;
+      padding-left: 24px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .content-area li {
+      margin-bottom: 6px;
+    }
+
+    .content-area strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .content-area code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: var(--preview-bg);
+      border: 1px solid var(--border);
+      color: var(--accent3);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .content-area blockquote {
+      background: var(--accent2-dim);
+      border: 1px solid rgba(126, 200, 255, .12);
+      border-left: 3px solid var(--accent2);
+      border-radius: var(--radius-xs);
+      padding: 12px 16px;
+      margin: 20px 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    
+    .content-area blockquote p:last-child {
+      margin-bottom: 0;
+    }
+
+    .content-area img {
+      max-width: 100%;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      display: block;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* Markdown Table Styling matching your dp-meta */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--preview-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      min-width: 500px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    th {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--surface);
+    }
+
+    td {
+      color: var(--text-dim);
+    }
+
+    td code {
+      color: var(--accent);
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: 12px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <!-- Wstaw tu ścieżkę do swojego pliku PNG -->
+      <img src="assets/logo.png" alt="" style="height: 24px; border-radius: 4px; display: block; border: none; object-fit: contain;">
+      <span>My Action Bar</span>
+    </div>
+    <div class="badge">Personalize your Action Bar</div>
+    <div class="spacer"></div>
+  </header>
+
+  <!-- Main Scrollable Area -->
+  <div class="main-view">
+    <div class="container">
+      
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <img src="https://i.ibb.co/Xf88FHYf/minecraft-title.png" alt="My Action Bar Banner" class="hero-banner">
+        
+        <h1 class="hero-title">My Action Bar</h1>
+        <div class="version-tag">Latest Version: v1.2</div>
+        
+        <p class="hero-desc"><strong>A fully customizable action bar datapack - display world info your way.</strong></p>
+        <p class="hero-desc" style="font-style: italic; font-size: 14px;">Datapack that lets you customize the information displayed in your action bar. Choose which elements are visible and which are hidden, so you only see the information that matters most while playing.</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="buttons-grid">
+        <a href="#" class="dl-btn">View on Planet Minecraft</a>
+        <a href="#" class="dl-btn">Download on Modrinth</a>
+        <a href="#" class="dl-btn">Download on CurseForge</a>
+        <a href="#" class="dl-btn btn-modrinth">Download Mod (Modrinth)</a>
+      </div>
+
+      <div class="buttons-grid">
+        <a href="Configurator.html" class="tool-btn">Online Configurator</a>
+        <a href="color-palette.html" class="tool-btn">Color Palette</a>
+        <a href="separators-palette.html" class="tool-btn">Separators Palette</a>
+      </div>
+
+      <hr>
+
+      <!-- Markdown Content -->
+      <div class="content-area">
+        <h2>Features</h2>
+
+        <h3>Day Counter</h3>
+        <p>Shows the current in-game day number. Toggle the <code>Day</code> prefix on or off to suit your style.</p>
+
+        <h3>Weather Indicator</h3>
+        <p>Displays the current weather in one of two modes:</p>
+        <p><strong>Icon mode</strong> <em>(default)</em> — uses intuitive icons:</p>
+        <ul>
+          <li>☀️ Clear sky</li>
+          <li>🌧️ Rain</li>
+          <li>⚡ Thunderstorm</li>
+          <li>❄️ Snow</li>
+          <li>❄️⚡ Blizzard (snow + thunder simultaneously)</li>
+        </ul>
+        <p><strong>Text mode</strong> — displays weather as plain text:</p>
+        <ul>
+          <li>Clear → <code>Sun</code></li>
+          <li>Rain → <code>Rain</code></li>
+          <li>Thunderstorm → <code>Thunder</code></li>
+          <li>Snow → <code>Snow</code></li>
+          <li>Blizzard → <code>Snow Thunder</code></li>
+        </ul>
+        <blockquote>
+          <p>Hidden automatically in the Nether and End, where weather doesn't apply.</p>
+        </blockquote>
+
+        <h3>Clock</h3>
+        <p>Displays the current in-game time in two available formats:</p>
+        <ul>
+          <li><strong>24-hour</strong> <em>(default)</em> — e.g. <code>14:30</code></li>
+          <li><strong>12-hour</strong> — e.g. <code>2:30 PM</code></li>
+        </ul>
+
+        <h3>Coordinates <em>(hidden by default)</em></h3>
+        <p>Shows your current X, Y, Z position. Toggle the coordinate prefix on or off independently.</p>
+
+        <h3>Facing Direction <em>(hidden by default)</em></h3>
+        <p>Shows which direction you're currently looking. Supports full names (e.g. <code>West</code>), abbreviated names (e.g. <code>W</code>), and optional intercardinal directions (e.g. <code>North-East</code> / <code>NE</code>).</p>
+
+        <h3>Player Head <em>(hidden by default)</em></h3>
+        <p>Displays your player head icon inside the action bar for a personalized touch.</p>
+
+        <hr>
+
+        <h2>Dynamic Gradient Color System</h2>
+        <p>The action bar text color <strong>smoothly transitions</strong> based on the in-game time shown on the clock. The chart below shows the full 24-hour color cycle:</p>
+        
+        <img src="https://i.ibb.co/mrn030mT/Zrzut-ekranu-2026-07-29-121230.png" alt="Action bar dynamic gradient text color adjustment chart">
+
+        <blockquote>
+          <p><strong>00:00 → 04:00</strong> — Deep purple/indigo (late night)<br>
+          <strong>04:00 → 08:00</strong> — Warm golden yellow (sunrise)<br>
+          <strong>08:00 → 12:00</strong> — Fading into bright white (morning)<br>
+          <strong>12:00</strong> — Pure white (noon peak)<br>
+          <strong>12:00 → 16:00</strong> — Shifting into warm orange (afternoon)<br>
+          <strong>16:00 → 20:00</strong> — Deep orange-red (sunset)<br>
+          <strong>20:00 → 23:59</strong> — Fading back to cool blue/purple (night)</p>
+        </blockquote>
+        <blockquote>
+          <p><strong>Fun fact:</strong> Every single hour and minute has its own individually defined color — that's <strong>1,440 unique color values</strong> declared in total!</p>
+        </blockquote>
+
+        <hr>
+
+        <h2>Full Per-Player Customization</h2>
+        <p>Every player can personalize their own action bar using <code>/trigger</code> commands — no operator permissions needed.</p>
+
+        <img src="https://i.ibb.co/fVDWzMLh/sample.png" alt="Sample settings">
+
+        <h3>Available Commands</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Description</th>
+                <th>Default</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>/trigger version</code></td><td>Display the current datapack version</td><td>-</td></tr>
+              <tr><td><code>/trigger default</code></td><td>Reset all settings to default</td><td>-</td></tr>
+              <tr><td><code>/trigger random</code></td><td>Randomize all action bar settings</td><td>-</td></tr>
+              <tr><td><code>/trigger show</code></td><td>Toggle the action bar on/off</td><td>Shown</td></tr>
+              <tr><td><code>/trigger show_days</code></td><td>Toggle the day counter</td><td>Shown</td></tr>
+              <tr><td><code>/trigger show_weather_info</code></td><td>Toggle the weather indicator</td><td>Shown</td></tr>
+              <tr><td><code>/trigger weather_info_type</code></td><td>Switch weather display mode</td><td>Icon mode</td></tr>
+              <tr><td><code>/trigger show_clock</code></td><td>Toggle the clock</td><td>Shown</td></tr>
+              <tr><td><code>/trigger time_format</code></td><td>Switch clock between 24h and 12h</td><td>24-hour</td></tr>
+              <tr><td><code>/trigger show_cordinates</code></td><td>Toggle coordinates</td><td>Hidden</td></tr>
+              <tr><td><code>/trigger show_days_prefix</code></td><td>Toggle the "Day X" prefix text</td><td>Shown</td></tr>
+              <tr><td><code>/trigger show_cordinates_prefix</code></td><td>Toggle the coordinate prefix labels</td><td>Shown</td></tr>
+              <tr><td><code>/trigger show_facing_direction</code></td><td>Toggle the facing direction indicator</td><td>Hidden</td></tr>
+              <tr><td><code>/trigger facing_direction_type</code></td><td>Switch between full and abbreviated direction names</td><td>Full</td></tr>
+              <tr><td><code>/trigger facing_direction_advanced</code></td><td>Toggle intercardinal directions</td><td>Disabled</td></tr>
+              <tr><td><code>/trigger show_player_head</code></td><td>Toggle the player head icon</td><td>Hidden</td></tr>
+              <tr><td><code>/trigger dynamic_clock_color</code></td><td>Toggle the dynamic gradient color</td><td>Enabled</td></tr>
+              <tr><td><code>/trigger set_color</code></td><td>Set a static solid color (requires dynamic OFF)</td><td>Default color</td></tr>
+              <tr><td><code>/trigger text_style</code></td><td>Set the text formatting style</td><td>Default</td></tr>
+              <tr><td><code>/trigger separators</code></td><td>Change the separator character between elements</td><td><code>•</code></td></tr>
+              <tr><td><code>/trigger external_separators</code></td><td>Change or enable outer separators</td><td>Disabled</td></tr>
+              <tr><td><code>/trigger display_order</code></td><td>Change the display order of elements</td><td>Default</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Weather Display Mode (<code>/trigger weather_info_type</code>)</h3>
+        <ul>
+          <li><code>set 0</code> — icon mode <em>(default)</em></li>
+          <li><code>set 1</code> — text mode</li>
+        </ul>
+
+        <h3>Clock Format (<code>/trigger time_format</code>)</h3>
+        <ul>
+          <li><code>set 0</code> — 24-hour format <em>(default)</em></li>
+          <li><code>set 1</code> — 12-hour format</li>
+        </ul>
+
+        <h3>Facing Direction Type (<code>/trigger facing_direction_type</code>)</h3>
+        <ul>
+          <li><code>set 0</code> — full names, e.g. <code>West</code> <em>(default)</em></li>
+          <li><code>set 1</code> — abbreviated names, e.g. <code>W</code></li>
+        </ul>
+
+        <h3>Intercardinal Directions (<code>/trigger facing_direction_advanced</code>)</h3>
+        <ul>
+          <li><code>set 0</code> — cardinal directions only <em>(default)</em></li>
+          <li><code>set 1</code> — include intercardinal directions, e.g. <code>North-East</code> / <code>NE</code></li>
+        </ul>
+
+        <h3>Text Style (<code>/trigger text_style</code>)</h3>
+        <p>Choose from 13 formatting styles for the action bar text:</p>
+        <ul>
+          <li><code>set 0</code> — default formatting <em>(default)</em></li>
+          <li><code>set 1</code> — underline</li>
+          <li><code>set 2</code> — bold</li>
+          <li><code>set 3</code> — bold + underline</li>
+          <li><code>set 4</code> — italic</li>
+          <li><code>set 5</code> — italic + bold</li>
+          <li><code>set 6</code> — italic + underline</li>
+          <li><code>set 7</code> — italic + bold + underline</li>
+          <li><code>set 8</code> — strikethrough</li>
+          <li><code>set 9</code> — strikethrough + bold</li>
+          <li><code>set 10</code> — strikethrough + underline</li>
+          <li><code>set 11</code> — strikethrough + italic</li>
+          <li><code>set 12</code> — strikethrough + underline + italic + bold</li>
+        </ul>
+
+        <h3>Separator Picker (<code>/trigger separators</code>)</h3>
+        <p>Change the character that separates elements in the action bar.</p>
+        <ul>
+          <li><code>/trigger separators set 0</code> — use the default <code>•</code> character</li>
+          <li><code>/trigger separators set &lt;1–64&gt;</code> — pick a specific separator</li>
+          <li><code>/trigger separators add &lt;value&gt;</code> — offset from your current separator</li>
+        </ul>
+        <p><a href="separators-palette.html">See the full separator palette on the website</a></p>
+
+        <h3>Outer Separator Picker (<code>/trigger external_separators</code>)</h3>
+        <p>Add decorative separators at the very beginning and end of the action bar.</p>
+        <ul>
+          <li><code>/trigger external_separators set 0</code> — disable outer separators <em>(default)</em></li>
+          <li><code>/trigger external_separators set &lt;1–64&gt;</code> — pick a specific outer separator style</li>
+          <li><code>/trigger external_separators add &lt;value&gt;</code> — offset from your current selection</li>
+        </ul>
+
+        <h3>Display Order (<code>/trigger display_order</code>)</h3>
+        <p>Rearrange the order in which elements appear in the action bar.</p>
+        <ul>
+          <li><code>/trigger display_order set 0</code> — restore default order <em>(default)</em></li>
+          <li><code>/trigger display_order set &lt;1–719&gt;</code> — choose one of the available orderings</li>
+          <li><code>/trigger display_order add &lt;value&gt;</code> — offset from your current order</li>
+        </ul>
+
+        <h3>Static Color Picker (<code>/trigger set_color</code>)</h3>
+        <p>When dynamic color is disabled, choose from <strong>64 handpicked colors</strong> organized by palette:</p>
+        <p><code>White (1–6)</code> → <code>Red (7–11)</code> → <code>Orange (12–15)</code> → <code>Yellow (16–21)</code> → <code>Green (22–28)</code> → <code>Cyan (29–32)</code> → <code>Blue (33–42)</code> → <code>Purple (43–47)</code> → <code>Pink (48–52)</code> → <code>Brown (53–56)</code> → <code>Other (57–64)</code></p>
+        <ul>
+          <li><code>/trigger set_color set &lt;1–64&gt;</code> — pick a specific color</li>
+          <li><code>/trigger set_color add &lt;value&gt;</code> — offset from your current color</li>
+          <li><code>/trigger set_color</code> <em>(alone)</em> — cycle to the next color</li>
+          <li><code>/trigger set_color set 0</code> — revert to default color</li>
+        </ul>
+        <p><a href="color-palette.html">See the full color palette on the website</a></p>
+
+        <hr>
+
+        <h2>Quick Command Reference</h2>
+        <p>All commands follow the same toggle/set pattern:</p>
+        <ul>
+          <li><code>set 1</code> → enable/show</li>
+          <li><code>set 0</code> → disable/hide or reset to default</li>
+          <li>Bare trigger (e.g. <code>/trigger show</code>) → <strong>toggles</strong> between states</li>
+        </ul>
+
+        <hr>
+
+        <h2>Credits</h2>
+        <p><strong>Creator:</strong> <a href="https://kazanek.bio.link/" target="_blank">MrKazanek</a></p>
+        <p>Thank you to everyone who supported this project! ❤️</p>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        &copy; 2026 My Action Bar. <br>
+        <a href="https://opensource.org/licenses/MIT" target="_blank" style="color: var(--text-muted); text-decoration: underline; margin-top: 5px; display: inline-block;">View Datapack License</a>
+      </footer>
+
+    </div>
+  </div>
+
+</body>
+</html>
