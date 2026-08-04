@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Action Bar — Online Configurator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!--  HEADER  -->
+  <header>
+    <div class="logo"> <span> <img src="assets/logo.png" height="40px" alt="">&nbsp; — Online Configurator</span></div>
+    <div class="badge">Create your perfect Action Bar!</div>
+    <div class="spacer"></div>
+    <div class="header-select">
+      <span>Datapack Version:</span>
+      <select id="dpVersion" onchange="onDpVersionChange()">
+        <option value="1.2">v1.2 (Latest)</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!--LEFT -->
+    <div class="left-panel">
+
+      <!-- PREVIEW -->
+      <div class="preview-wrap">
+        <div class="preview-label">
+          Action Bar Preview <span class="preview-texture-note">*The in-game result may differ slightly from the
+            preview.</span>
+        </div>
+
+        <div class="minecraft-screen">
+          <div class="mc-bg-layer" id="mcBgDefault"></div>
+          <div class="mc-bg-image" id="mcBgImage"></div>
+          <div class="mc-overlay"></div>
+          <div class="mc-content">
+            <div class="action-bar-display" id="previewBar"></div>
+          </div>
+          <div class="hotbar-wrap">
+            <div class="hotbar-default" id="hotbarDefault">
+              <div class="hotbar-slot active"></div>
+              <div class="hotbar-slot"></div>
+              <div class="hotbar-slot"></div>
+              <div class="hotbar-slot"></div>
+              <div class="hotbar-slot"></div>
+              <div class="hotbar-slot"></div>
+              <div class="hotbar-slot"></div>
+              <div class="hotbar-slot"></div>
+              <div class="hotbar-slot"></div>
+            </div>
+            <img class="hotbar-img" id="hotbarImage" style="display:none" alt="">
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="settings-panel">
+
+        <div class="section-title">Visibility & Display Type</div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name"><span class="s-icon"></span>Enable Action Bar</div>
+            <div class="setting-desc">Turn the entire display on or off</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show" checked>
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name"><span class="s-icon"></span>Show Clock</div>
+            <div class="setting-desc">Show Minecraft time</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show_clock" checked>
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row" id="row-time-format">
+          <div class="setting-info">
+            <div class="setting-name">Time Format</div>
+            <div class="setting-desc">24-hour or 12-hour (AM/PM) format</div>
+          </div>
+          <div class="setting-control">
+            <select class="fancy-select" id="time_format">
+              <option value="0">24h (14:30)</option>
+              <option value="1">12h (2:30 PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name"><span class="s-icon"></span>Show Weather</div>
+            <div class="setting-desc">Displays the current weather</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show_weather_info" checked>
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row" id="row-weather-type">
+          <div class="setting-info">
+            <div class="setting-name">Weather Display Type</div>
+            <div class="setting-desc">Display weather using an emoji icon or full name</div>
+          </div>
+          <div class="setting-control">
+            <select class="fancy-select" id="weather_info_type">
+              <option value="0">Emoji Icon</option>
+              <option value="1">Full Name</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name"><span class="s-icon"></span>Show Days</div>
+            <div class="setting-desc">Displays the number of days in the world</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show_days" checked>
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row" id="row-days-prefix">
+          <div class="setting-info">
+            <div class="setting-name">Days Prefix</div>
+            <div class="setting-desc">Use "Day X" instead of just "X"</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show_days_prefix" checked>
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name"><span class="s-icon"></span>Show Coordinates</div>
+            <div class="setting-desc">Displays the player's XYZ position</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show_cordinates">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row" id="row-coords-prefix">
+          <div class="setting-info">
+            <div class="setting-name">Coordinates Prefix</div>
+            <div class="setting-desc">Adds "X: Y: Z:" before the values</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show_cordinates_prefix" checked>
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name"><span class="s-icon"></span>Show Direction</div>
+            <div class="setting-desc">World direction (N/S/E/W...)</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show_facing_direction">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row" id="row-dir-type">
+          <div class="setting-info">
+            <div class="setting-name">Direction Type</div>
+            <div class="setting-desc">Full name or abbreviation</div>
+          </div>
+          <div class="setting-control">
+            <select class="fancy-select" id="facing_direction_type">
+              <option value="0">Full (North)</option>
+              <option value="1">Abbreviation (N)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row" id="row-dir-adv">
+          <div class="setting-info">
+            <div class="setting-name">Advanced Direction</div>
+            <div class="setting-desc">NE/SW/NW etc.</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="facing_direction_advanced">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name"><span class="s-icon"></span>Display Player Head</div>
+            <div class="setting-desc">Shows a player head thumbnail from the player's skin</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="show_player_head">
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- COLOR -->
+        <div class="section-title">Text Color</div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name"><span class="s-icon"></span>Dynamic Color</div>
+            <div class="setting-desc">The color changes depending on the time of day</div>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-wrap"><input type="checkbox" id="dynamic_clock_color" checked>
+              <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="full-row" id="color-picker-section" style="display:none">
+          <div class="full-row-title"><span class="s-icon"></span><a href="https://myactionbar.netlify.app/color-palette.html" target="_blank" title="View the available color palette">Custom Static Color</a></div>
+          <div class="color-grid" id="colorGrid"></div>
+        </div>
+
+        <!-- STYLE -->
+        <div class="section-title">Text Style</div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Style</div>
+            <div class="setting-desc">Bold, italic, underline, strikethrough</div>
+          </div>
+          <div class="setting-control">
+            <select class="fancy-select" id="text_style">
+              <option value="0">Normal</option>
+              <option value="1">Underlined</option>
+              <option value="2">Bold</option>
+              <option value="3">Bold + Underlined</option>
+              <option value="4">Italic</option>
+              <option value="5">Italic + Bold</option>
+              <option value="6">Italic + Underlined</option>
+              <option value="7">Italic + Bold + Underlined</option>
+              <option value="8">Strikethrough</option>
+              <option value="9">Strikethrough + Bold</option>
+              <option value="10">Strikethrough + Underlined</option>
+              <option value="11">Strikethrough + Italic</option>
+              <option value="12">All Styles</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SEPARATORS -->
+        <div class="section-title">Separators</div>
+
+        <div class="full-row">
+          <div class="full-row-title"><a href="https://myactionbar.netlify.app/separators-palette.html" target="_blank" title="View the list of available separators">Separator Between Sections </a></div>
+          <div class="sep-grid" id="sepGrid"></div>
+        </div>
+
+        <div class="full-row">
+          <div class="full-row-title"><a href="https://myactionbar.netlify.app/separators-palette.html" target="_blank" title="View the list of available separators">External Separators</a></div>
+          <div class="sep-grid" id="extSepGrid"></div>
+        </div>
+
+        <div class="section-title">Display Order</div>
+        <div class="full-row">
+          <div class="full-row-title">Use the arrows to change the display order</div>
+          <div class="order-grid" id="orderGrid"></div>
+        </div>
+
+        <button class="random-btn" type="button" onclick="randomizeSettings()">Random Configuration</button>
+        <button class="reset-btn" type="button" onclick="resetActionBarSettings()" style="margin-top:6px">↩ Reset to Default</button>
+
+      </div><!-- settings panel end -->
+    </div><!-- left panel end -->
+
+    <!-- right panek -->
+    <div class="right-panel">
+      <div class="right-tabs">
+        <div class="right-tab active" data-tab="commands">Commands</div>
+        <div class="right-tab" data-tab="datapack">Datapack</div>
+      </div>
+
+      <div class="right-content">
+
+        <!-- command tab -->
+        <div id="tab-commands">
+          <div class="panel-label">Commands to Use In-Game</div>
+          <div class="cmd-block" id="cmdOutput"></div>
+          <button class="copy-btn" id="copyBtn" onclick="copyCommands()"> Copy Commands</button>
+
+          <div class="panel-label">Configured Values</div>
+          <div class="cmd-block" id="valOutput" style="color:var(--text-dim)"></div>
+        </div>
+
+        <!-- DATAPACK Tab -->
+        <div id="tab-datapack" style="display:none">
+
+          <div class="panel-label">Datapack Settings</div>
+
+          <div class="dp-field-label">Datapack Name (Folder)</div>
+          <input type="text" class="dp-input" id="dpName" value="MyActionBar_AutoSetup"
+            placeholder="e.g. MyActionBar_AutoSetup">
+
+          <div class="dp-field-label">Datapack Description</div>
+          <input type="text" class="dp-input" id="dpDesc" value="Shows customizable information on the Action Bar"
+            placeholder="e.g. My Action Bar — Auto Setup">
+
+          <div class="panel-label" style="margin-top:14px">Details</div>
+          <div class="dp-meta">
+            <div class="dp-row"><span class="dp-key">Version</span><span class="dp-val" id="dpVerDisplay">v1.2</span>
+            </div>
+            <div class="dp-row"><span class="dp-key">Namespace</span><span class="dp-val">mab_config</span>
+            </div>
+            <div class="dp-row"><span class="dp-key">Function</span><span class="dp-val">mab_config:apply</span></div>
+            <div class="dp-row"><span class="dp-key">Trigger</span><span class="dp-val">#minecraft:tick</span></div>
+            <div class="dp-row"><span class="dp-key">Zip File</span><span class="dp-val"
+                id="dpZipName">MyActionBar_AutoSetup.zip</span></div>
+          </div>
+
+          <!-- ADVANCED -->
+          <div class="adv-section">
+            <div class="adv-toggle-row" onclick="toggleAdv()">
+              <div class="adv-title">⚙ Advanced Datapack Settings</div>
+              <div class="adv-arrow" id="advArrow">▼</div>
+            </div>
+            <div class="adv-body" id="advBody">
+
+              <div class="adv-row">
+                <label>min_format</label>
+                <input type="number" class="dp-input" id="dpMinFormat" value="101"
+                  style="width:70px;min-width:0;margin:0">
+              </div>
+              <div class="adv-row">
+                <label>max_format</label>
+                <input type="number" class="dp-input" id="dpMaxFormat" value="999"
+                  style="width:70px;min-width:0;margin:0">
+              </div>
+              <div class="adv-row" style="margin-top:10px">
+                <label>Apply settings to</label>
+                <select class="fancy-select" id="dpTarget" style="min-width:110px">
+                  <option value="@a">@a (Everyone)</option>
+                  <option value="@p">@p (Nearest Player)</option>
+                  <option value="@s">@s (Executor)</option>
+                </select>
+              </div>
+
+              <div class="adv-row">
+                <label>Include comments</label>
+                <label class="toggle-wrap"><input type="checkbox" id="dpComments" checked>
+                  <div class="toggle-track">
+                    <div class="toggle-thumb"></div>
+                  </div>
+                </label>
+              </div>
+
+              <div class="adv-row">
+                <label>Send chat notification</label>
+                <label class="toggle-wrap"><input type="checkbox" id="dpNotify" checked>
+                  <div class="toggle-track">
+                    <div class="toggle-thumb"></div>
+                  </div>
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="dp-info">
+            <strong>How does it work?</strong><br>
+            You need to download the <a href="https://modrinth.com/datapack/my-action-bar" target="_blank">My Action Bar</a> datapack.
+            Then add the datapack generated here to your world's datapacks folder. The main My Action Bar datapack must
+            also be installed in the world.
+          </div>
+
+          <button class="dl-btn" onclick="downloadDatapack()">Download Datapack</button>
+          <button class="reset-btn" onclick="resetDatapackSettings()">↩ Reset Datapack Settings</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /layout -->
+
+ <!-- js -->
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

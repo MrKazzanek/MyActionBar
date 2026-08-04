@@ -1,0 +1,17 @@
+{
+  "version": "1.2",
+  "sourceDatapack": "My Action Bar.zip",
+  "previewTextures": {
+    "background": "assets/preview-background.png",
+    "hotbar": "assets/hotbar.png",
+    "playerHead": "assets/player-head.png"
+  },
+  "defaults": {
+    "show": 1, "show_clock": 1, "time_format": 0, "dynamic_clock_color": 1,
+    "show_weather_info": 1, "weather_info_type": 0, "show_days": 1, "show_days_prefix": 1,
+    "show_cordinates": 0, "show_cordinates_prefix": 1, "show_facing_direction": 0,
+    "facing_direction_type": 0, "facing_direction_advanced": 0, "show_player_head": 0,
+    "text_style": 0, "set_color": 0, "separators": 0, "external_separators": 0,
+    "display_order": 0
+  }
+}
