@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>License Agreement - My Action Bar</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================
+       BAZOWY CSS (taki sam jak na stronie głównej)
+       ========================================= */
+    :root {
+      --bg: #0b0c11;
+      --surface: #13151d;
+      --surface2: #1a1d27;
+      --surface3: #22263a;
+      --border: #272b3d;
+      --border2: #323654;
+      --accent: #eeff70;
+      --accent-dim: rgba(238, 255, 112, .12);
+      --accent2: #7ec8ff;
+      --accent2-dim: rgba(126, 200, 255, .1);
+      --accent3: #ff7eb3;
+      --text: #d4d8eb;
+      --text-muted: #5a6080;
+      --text-dim: #8890aa;
+      --preview-bg: #080910;
+      --green: #5dfc8a;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-xs: 5px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5;
+      min-height: 100vh; overflow: hidden;
+    }
+
+    /* ─── Header ─── */
+    header {
+      border-bottom: 1px solid var(--border); padding: 13px 20px;
+      display: flex; align-items: center; gap: 14px;
+      background: var(--surface); height: 52px; flex-shrink: 0;
+      user-select: none; -webkit-user-select: none;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 16px;
+      color: var(--accent); letter-spacing: -.5px; white-space: nowrap;
+      display: flex; align-items: center; gap: 8px; text-decoration: none;
+    }
+
+    .logo span { color: var(--text-muted); font-weight: 400; line-height: 45px; }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 7px;
+      border-radius: 4px; background: rgba(126, 200, 255, .08); color: var(--accent2);
+      border: 1px solid rgba(126, 200, 255, .2); white-space: nowrap;
+    }
+
+    header .spacer { flex: 1; }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+    a { color: lightskyblue; text-decoration: none; transition: color 0.15s; }
+    a:hover { color: var(--accent2); }
+
+    /* =========================================
+       STYLE KONTENTU
+       ========================================= */
+    .main-view {
+      height: calc(100vh - 52px); overflow-y: auto; scroll-behavior: smooth;
+      user-select: text; -webkit-user-select: text;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 20px 60px; }
+
+    .license-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .license-title {
+      font-family: 'JetBrains Mono', monospace; font-size: 24px; color: var(--accent);
+      text-align: center; margin-bottom: 30px; letter-spacing: 1px;
+      padding-bottom: 20px; border-bottom: 1px dashed var(--border2);
+    }
+
+    .content-area h3 {
+      font-size: 15px; color: #fff; margin: 30px 0 12px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    .content-area p { margin-bottom: 16px; color: var(--text-dim); line-height: 1.7; }
+
+    .content-area ul { margin-bottom: 24px; padding-left: 20px; color: var(--text-dim); }
+    .content-area li { margin-bottom: 8px; line-height: 1.6; }
+
+    .allowed-list li::marker { color: var(--green); }
+    .not-allowed-list li::marker { color: var(--accent3); }
+
+    .contact-block {
+      margin-top: 40px; padding: 20px; background: var(--preview-bg);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+    }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;
+      color: var(--text-muted); font-size: 13px; font-weight: 500;
+      font-family: 'Inter', sans-serif; transition: color 0.15s;
+    }
+    .back-btn:hover { color: var(--accent); }
+
+    @media (max-width: 600px) {
+      header { flex-wrap: wrap; height: auto; padding: 10px 14px; }
+      .license-box { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="index.html" class="logo">
+      <img src="assets/logo.png" alt="" style="height: 24px; border-radius: 4px; display: block; border: none; object-fit: contain;">
+      <span>My Action Bar</span>
+    </a>
+    <div class="badge">Personalize your Action Bar</div>
+    <div class="spacer"></div>
+  </header>
+
+  <!-- Main Scrollable Area -->
+  <div class="main-view">
+    <div class="container">
+      
+      <a href="index.html" class="back-btn">← Back to Home</a>
+
+      <div class="license-box content-area">
+        <h1 class="license-title">LICENSE AGREEMENT</h1>
+        
+        <p><strong>Copyright &copy; 2026 MrKazanek</strong><br>All rights reserved.</p>
+        
+        <p>This datapack, "My Action Bar", and all of its contents, including but not limited to functions, scripts, files, assets, structures, configuration, and original ideas, are the property of MrKazanek and are protected by copyright law.</p>
+
+        <h3>You are allowed to:</h3>
+        <ul class="allowed-list">
+          <li>Use this datapack free of charge.</li>
+          <li>Use this datapack in your own Minecraft worlds.</li>
+          <li>Modify this datapack for personal use only.</li>
+          <li>Share the original, unmodified version of this datapack, provided that proper credit is given to the author.</li>
+        </ul>
+
+        <h3>You are NOT allowed to:</h3>
+        <ul class="not-allowed-list">
+          <li>Redistribute, publish, or share modified versions of this datapack in any form.</li>
+          <li>Sell this datapack or any part of it.</li>
+          <li>Claim this datapack or any of its contents as your own work.</li>
+          <li>Copy, extract, or reuse parts of this datapack in other projects without explicit permission from the author.</li>
+          <li>Remove or modify the copyright notice or author credits included with this datapack.</li>
+        </ul>
+
+        <p>Any modifications made for personal use must remain private and must not be publicly distributed, uploaded, or shared in any way.</p>
+
+        <p>If you would like to use this datapack or any part of it in another project, you must first obtain permission from the author.</p>
+
+        <div class="contact-block">
+          <p style="margin-bottom: 5px;"><strong>Author:</strong> MrKazanek</p>
+          <p style="margin-bottom: 0;"><strong>Contact:</strong> Discord: <span style="color: var(--accent2);">kazanek</span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
