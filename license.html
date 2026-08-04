@@ -40,6 +40,7 @@
       background: var(--bg); color: var(--text);
       font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5;
       min-height: 100vh; overflow: hidden;
+      user-select: none; -webkit-user-select: none;
     }
 
     /* ─── Header ─── */
@@ -79,7 +80,7 @@
        ========================================= */
     .main-view {
       height: calc(100vh - 52px); overflow-y: auto; scroll-behavior: smooth;
-      user-select: text; -webkit-user-select: text;
+     
     }
 
     .container { max-width: 760px; margin: 0 auto; padding: 40px 20px 60px; }
