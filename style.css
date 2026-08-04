@@ -80,7 +80,7 @@ header {
   justify-content: center;
   color: var(--text-muted);
   font-weight: 400;
-  line-height: 45px;
+  line-height: 60px;
   
 }
 
@@ -135,7 +135,7 @@ header .spacer {
 .layout {
   display: grid;
   grid-template-columns: 1fr 360px;
-  height: calc(100vh - 52px);
+  height: calc(100vh - 92px);
   overflow: hidden;
 }
 
